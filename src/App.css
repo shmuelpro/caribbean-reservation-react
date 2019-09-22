@@ -1,0 +1,30 @@
+.row-cell{
+  vertical-align: middle;
+  border: 1px solid #eaeaea;
+  color: hsl(0, 0%, 0%);
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background: white;
+}
+
+.caribbean-row{
+  line-height: 1;
+}
+
+.tag{
+  display: flex;
+  z-index: 999;
+  position: absolute;
+
+  color: rgb(255, 255, 255);
+  background: linear-gradient(rgb(198, 92, 187) 0%, rgb(173, 22, 158) 33%, rgb(173, 22, 158) 63%, rgb(121, 15, 111) 100%);
+}
+
+.a-bit-tight{
+  background:blue;
+}
