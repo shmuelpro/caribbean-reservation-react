@@ -120,13 +120,13 @@ export default function CaribbeanReservation(props) {
 
 
     return (<div id="grid" >
-    <Head  headRow={props.headRow} />
+    <Head  headRow={props.headRow} rowTitleWidth={props.rowTitleWidth}  dimension={props.dimension} hasColumnTitle={props.columnTitle.length > 0}/>
         {[...Array(rowCount)].map((x, r) => {
 
             return <div className="caribbean-row" key={r}>
 
 
-                <div className="row-cell" style={{width:props.row_title_width,height: props.dimension + "px"}} > {props.columnTitle[r]} </div>
+                <div className="row-cell" style={{width:props.rowTitleWidth,height: props.dimension + "px"}} > {props.columnTitle[r]} </div>
 
 
 
@@ -160,5 +160,5 @@ CaribbeanReservation.defaultProps = {
     dimension: 20,
     width: 25,
     height: 1,
-    row_title_width: 35
+    rowTitleWidth: 35
 }

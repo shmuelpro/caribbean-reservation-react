@@ -11,7 +11,8 @@ function App() {
   
   const [tags, setTags] = useState([{ id: "xx", length: 3, row: 2, column: 8,class:"a-bit-tight" }, { id: "xy", length: 4, row: 5, column: 12,style:{background:"red"} }])
 
-  const [headRow,setHeadRow] = useState([0,1,2]);
+  const [headRow,setHeadRow] = useState([0,1,2,,,<div>123</div>]);
+  console.log(headRow)
 
   function makeid() {
     let text = "";
