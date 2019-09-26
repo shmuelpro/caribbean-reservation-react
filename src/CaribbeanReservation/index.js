@@ -15,7 +15,9 @@ export default function CaribbeanReservation(props) {
 
     const [myrefs, setMyRefs] = useState([]);
 
-
+    React.Children.forEach(props.children,(child)=>{
+        console.log(child)
+    })
 
 
 
@@ -119,7 +121,7 @@ export default function CaribbeanReservation(props) {
 
 
 
-    return (<div id="grid" >
+    return (<div id="grid" style={props.style} >
     <Head  headRow={props.headRow} rowTitleWidth={props.rowTitleWidth}  dimension={props.dimension} hasColumnTitle={props.columnTitle.length > 0}/>
         {[...Array(rowCount)].map((x, r) => {
 
@@ -146,7 +148,7 @@ export default function CaribbeanReservation(props) {
 
             prepareTag(tag);
 
-            return <Tag key={tag.id} dimension={props.dimension} {...tag} />
+            return <Tag  key={tag.id} dimension={props.dimension} {...tag} />
         })}
     </div>)
 }

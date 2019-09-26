@@ -1,4 +1,5 @@
 import { isObject } from './helpers';
+import React from 'react';
 export function prepareTag(tag) {
 
        
@@ -28,5 +29,10 @@ export function prepareClass(tag){
     }
     tag.className = className;
 
+}
+
+
+export function createTagText(text){
+      return( <span className="tag-content">{text}</span> )
 }
 
