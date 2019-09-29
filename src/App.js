@@ -96,7 +96,8 @@ function App() {
 
 
   function mouseOverTag(){
-    
+console.log(
+  "I was mouseOVerf");
   }
 
   function tagClicked() {
@@ -125,7 +126,7 @@ function App() {
         {tags.map((tag) => {
 
 
-          return <Tag key={tag.id} onMouseOver={} onClick={tagClicked.bind(this)}  {...tag} />
+          return <Tag key={tag.id} onMouseOver={mouseOverTag.bind(this)} onClick={tagClicked.bind(this)}  {...tag} />
         })}
       </CaribbeanReservation>
 

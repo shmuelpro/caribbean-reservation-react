@@ -15,19 +15,29 @@ export default function CaribbeanReservation(props) {
 
     const [myrefs, setMyRefs] = useState([]);
 
-    React.Children.forEach(props.children,(child)=>{
-        console.log(child)
-    })
-
+   
 
 
     useLayoutEffect(() => {
 
-        setTags(reevaluatePositions(props.tags))
+        var newTags = [];
+        newTags = React.Children.map(props.children, (child) => {
+
+            if (child.type.displayName === "tag") {
+
+                
+                var newProps = prepareTag({ ...child.props });
+                
+                return React.cloneElement(child, newProps);
+            }
+        })
+        
+
+        setTags(newTags);
 
 
 
-    }, [rowCount, props.tags])
+    }, [rowCount, props.children])
 
     useEffect(() => {
         setColumnCount(getColumnCount());
@@ -86,49 +96,17 @@ export default function CaribbeanReservation(props) {
         }
     }
 
-    function reevaluatePositions(tags) {
-
-        var newTags = [...tags];
-
-        newTags.map((tag) => {
-
-
-            var position = getPosition(tag.row, tag.column);
-            var newStyle = { top: position.top, left: position.left }
-            if (isObject(tag.style)) {
-
-                newStyle = Object.assign({ ...tag.style }, newStyle)
-            }
-
-            tag.style = newStyle;
-
-            return tag;
-
-        })
-
-        return newTags
-    }
-
-    function getPosition(r, c) {
-        let element = document.getElementById(`carribean_r${r}c${c}`);
-        var position = {};
-        if (element) {
-            position = element.getBoundingClientRect();
-        }
-        return position;
-    }
-
 
 
 
     return (<div id="grid" style={props.style} >
-    <Head  headRow={props.headRow} rowTitleWidth={props.rowTitleWidth}  dimension={props.dimension} hasColumnTitle={props.columnTitle.length > 0}/>
+        <Head headRow={props.headRow} rowTitleWidth={props.rowTitleWidth} dimension={props.dimension} hasColumnTitle={props.columnTitle.length > 0} />
         {[...Array(rowCount)].map((x, r) => {
 
             return <div className="caribbean-row" key={r}>
 
 
-                <div className="row-cell" style={{width:props.rowTitleWidth,height: props.dimension + "px"}} > {props.columnTitle[r]} </div>
+                <div className="row-cell" style={{ width: props.rowTitleWidth, height: props.dimension + "px" }} > {props.columnTitle[r]} </div>
 
 
 
@@ -143,13 +121,10 @@ export default function CaribbeanReservation(props) {
 
         }
         )}
+      
+        {tags}
 
-        {props.tags.map((tag) => {
 
-            prepareTag(tag);
-
-            return <Tag  key={tag.id} dimension={props.dimension} {...tag} />
-        })}
     </div>)
 }
 
