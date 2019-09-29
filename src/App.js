@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import CaribbeanReservation from './CaribbeanReservation'
-import {createTagText} from './CaribbeanReservation/TagHelpers'
+import Tag from './CaribbeanReservation/Tag'
+import { createTagText } from './CaribbeanReservation/TagHelpers'
 import './App.css';
 
-function XMAN(props){
+function XMAN(props) {
 
-  return <div>This sis a thi</div>;
+  return <div>This sis a thi {props.lag}</div>;
 }
 
 XMAN.displayName = "Shit";
+console.log(XMAN.displayName)
 
 function App() {
 
@@ -40,11 +42,11 @@ function App() {
 
 
   function createRes(row, column) {
-    var newres = { id: makeid(), length: 1, row: row, column: column };
+    var newres = { id: makeid(), length: 1, row: row, column: column, isNew: true };
     setAddingRes(true)
     setNewRes(newres)
     setTags([...tags, newres]);
-    console.log(tags)
+
   }
 
   function continueRes(row, column) {
@@ -53,6 +55,7 @@ function App() {
       var editingRes = { ...newRes };
 
       evaluatePosition(editingRes, column);
+      setNewRes(editingRes)
       switchRes(editingRes)
 
 
@@ -60,6 +63,16 @@ function App() {
 
 
     }
+  }
+
+
+  function endRes(row, column) {
+
+    var editingRes = { ...newRes };
+    editingRes.isNew = false;
+    switchRes(editingRes)
+    setAddingRes(false);
+    console.log("done")
   }
 
   function evaluatePosition(editingRes, column) {
@@ -82,33 +95,38 @@ function App() {
 
 
 
+  function mouseOverTag(){
+    
+  }
 
-  function endRes(row, column) {
-
-
-    setAddingRes(false);
-    console.log("done")
+  function tagClicked() {
+    console.log("what")
   }
 
   return (
     <div id="main-app" className="App">
       <div id="tag-list" style={{ display: "inline-block" }}>{tags.map((tag) => {
 
-          return <div>{tag.id}</div>
+        return <div>{tag.id}</div>
       })}
       </div>
-      <CaribbeanReservation 
-      style={{ display: "inline-block" }} 
-      headRow={headRow} 
-      isAdding={addingRes} 
-      end={endRes.bind(this)} 
-      continue={continueRes.bind(this)} 
-      create={createRes.bind(this)} 
-      width={600} 
-      tags={tags} 
-      height={30} >
-      <XMAN key="s"/>
-      <XMAN key="ss"/>
+      <CaribbeanReservation
+        style={{ display: "inline-block" }}
+        headRow={headRow}
+        isAdding={addingRes}
+        end={endRes.bind(this)}
+        continue={continueRes.bind(this)}
+        create={createRes.bind(this)}
+        width={600}
+
+        height={30} >
+
+
+        {tags.map((tag) => {
+
+
+          return <Tag key={tag.id} onMouseOver={} onClick={tagClicked.bind(this)}  {...tag} />
+        })}
       </CaribbeanReservation>
 
     </div>
