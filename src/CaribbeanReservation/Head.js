@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 export default function Head(props) {
 
+
    
     return (<div className="caribbean-row" id="head">
 
 
-    {props.hasColumnTitle?<div className="row-cell" style={{width:props.rowTitleWidth,height: props.dimension + "px"}}/>:""}
+    {props.hasRowTitle?<div className="row-cell" style={{width:props.rowTitleWidth,height: props.dimension + "px"}}/>:""}
 
 
        { props.headRow.map((headitem,i) => {

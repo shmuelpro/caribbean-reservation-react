@@ -48,7 +48,7 @@ export default function CaribbeanReservation(props) {
 
     }, [props.height])
 
-
+ 
     function getColumnCount() {
         var y = props.width / props.dimension;
         var x = Math.floor(y);
@@ -100,13 +100,13 @@ export default function CaribbeanReservation(props) {
 
 
     return (<div id="grid" style={props.style} >
-        <Head headRow={props.headRow} rowTitleWidth={props.rowTitleWidth} dimension={props.dimension} hasColumnTitle={props.columnTitle.length > 0} />
+        <Head headRow={props.headRow} rowTitleWidth={props.rowTitleWidth} dimension={props.dimension} hasRowTitle={props.rowTitles.length > 0} />
         {[...Array(rowCount)].map((x, r) => {
 
             return <div className="caribbean-row" key={r}>
 
 
-                <div className="row-cell" style={{ width: props.rowTitleWidth, height: props.dimension + "px" }} > {props.columnTitle[r]} </div>
+                <div className="row-cell" style={{ width: props.rowTitleWidth, height: props.dimension + "px" }} > {props.rowTitles[r]} </div>
 
 
 
@@ -132,7 +132,7 @@ export default function CaribbeanReservation(props) {
 CaribbeanReservation.defaultProps = {
     tags: [],
     headRow: [],
-    columnTitle: [<div >sss</div>],
+    rowTitles: [<div >what</div>],
     content: [],
     dimension: 20,
     width: 25,

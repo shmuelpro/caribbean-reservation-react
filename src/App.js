@@ -5,13 +5,7 @@ import Tag from './CaribbeanReservation/Tag'
 import { createTagText } from './CaribbeanReservation/TagHelpers'
 import './App.css';
 
-function XMAN(props) {
 
-  return <div>This sis a thi {props.lag}</div>;
-}
-
-XMAN.displayName = "Shit";
-console.log(XMAN.displayName)
 
 function App() {
 
@@ -21,12 +15,23 @@ function App() {
 
   const [tags, setTags] = useState([{ id: "xx", length: 13, row: 2, column: 8, class: "a-bit-tight", content: createTagText("This is a tag") }, { id: "xy", length: 4, row: 5, column: 12, style: { background: "red" } }])
 
-  const [headRow, setHeadRow] = useState([0, 1, 2, null, null, <div>123</div>]);
+  const [headRow, setHeadRow] = useState([<div onClick={()=>{changeHead.apply(this);console.log("this works")}} >123</div>, 1, 2, null, null, <div>123</div>]);
 
   for (var i = 0; i < headRow.length; i++) {
     console.log(headRow[i])
   }
 
+
+  function changeHead(){
+    var newHead = [...headRow];
+    newHead[0] = <div>James</div>;
+
+    setHeadRow(newHead);
+  }
+
+  useEffect(()=>{
+    console.log(headRow)
+  },[headRow])
 
   function makeid() {
     let text = "";
@@ -96,13 +101,10 @@ function App() {
 
 
   function mouseOverTag(){
-console.log(
-  "I was mouseOVerf");
+console.log( "I was mouseOVerf");
   }
 
-  function tagClicked() {
-    console.log("what")
-  }
+
 
   return (
     <div id="main-app" className="App">
@@ -113,20 +115,21 @@ console.log(
       </div>
       <CaribbeanReservation
         style={{ display: "inline-block" }}
+        rowTitles={["Golf Cart 1",null,"Golf Cart 2", ]}
+        rowTitleWidth={80}
         headRow={headRow}
         isAdding={addingRes}
         end={endRes.bind(this)}
         continue={continueRes.bind(this)}
         create={createRes.bind(this)}
         width={600}
-
         height={30} >
 
 
         {tags.map((tag) => {
 
 
-          return <Tag key={tag.id} onMouseOver={mouseOverTag.bind(this)} onClick={tagClicked.bind(this)}  {...tag} />
+          return <Tag key={tag.id} onMouseOver={mouseOverTag.bind(this)}   {...tag} />
         })}
       </CaribbeanReservation>
 
