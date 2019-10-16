@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import CaribbeanReservation from './CaribbeanReservation'
 import Tag from './CaribbeanReservation/Tag'
-import { createTagText } from './CaribbeanReservation/TagHelpers'
+import { createTagText,getRandomColor } from './CaribbeanReservation/TagHelpers'
 import './App.css';
 
 
@@ -47,7 +47,7 @@ function App() {
 
 
   function createRes(row, column) {
-    var newres = { id: makeid(), length: 1, row: row, column: column, isNew: true };
+    var newres = { id: makeid(), length: 1, row: row, column: column, isNew: true,style:{background:getRandomColor()} };
     setAddingRes(true)
     setNewRes(newres)
     setTags([...tags, newres]);
@@ -100,14 +100,20 @@ function App() {
 
 
 
-  function mouseOverTag(){
-console.log( "I was mouseOVerf");
+  function mouseOverTag(id){
+
+    if(newRes && newRes.id !== id){
+     endRes();
+    }
+
+
   }
 
 
 
   return (
     <div id="main-app" className="App">
+      <div></div>
       <div id="tag-list" style={{ display: "inline-block" }}>{tags.map((tag) => {
 
         return <div>{tag.id}</div>
@@ -123,7 +129,9 @@ console.log( "I was mouseOVerf");
         continue={continueRes.bind(this)}
         create={createRes.bind(this)}
         width={600}
-        height={30} >
+        height={30} 
+        
+        >
 
 
         {tags.map((tag) => {
