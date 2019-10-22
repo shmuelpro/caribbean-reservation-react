@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import Tag from './Tag';
 import Head from './Head';
-import { isObject } from './helpers'
+
 import { prepareTag } from './TagHelpers';
 
 export default function CaribbeanReservation(props) {
@@ -13,10 +13,9 @@ export default function CaribbeanReservation(props) {
     const [columnCount, setColumnCount] = useState(0);
     const [tags, setTags] = useState([]);
 
-    const [myrefs, setMyRefs] = useState([]);
-
-   
-
+    
+  
+    
 
     useLayoutEffect(() => {
 
@@ -25,13 +24,13 @@ export default function CaribbeanReservation(props) {
 
             if (child.type.displayName === "tag") {
 
-                
+
                 var newProps = prepareTag({ ...child.props });
-                
+
                 return React.cloneElement(child, newProps);
             }
         })
-        
+
 
         setTags(newTags);
 
@@ -48,7 +47,9 @@ export default function CaribbeanReservation(props) {
 
     }, [props.height])
 
- 
+  
+
+
     function getColumnCount() {
         var y = props.width / props.dimension;
         var x = Math.floor(y);
@@ -96,7 +97,7 @@ export default function CaribbeanReservation(props) {
         }
     }
 
-
+ 
 
 
     return (<div id="grid" style={props.style} >
@@ -106,14 +107,25 @@ export default function CaribbeanReservation(props) {
             return <div className="caribbean-row" key={r}>
 
 
-                <div className="row-cell" style={{ width: props.rowTitleWidth, height: props.dimension + "px" }} > {props.rowTitles[r]} </div>
+                <div className={`row-cell row${r}`}  style={{ width: props.rowTitleWidth, height: props.dimension + "px" }} > {props.rowTitles[r]} </div>
 
 
 
                 {([...Array(columnCount)].map((x, c) => {
 
 
-                    return <div className="row-cell" id={`carribean_r${r}c${c}`} onMouseEnter={() => { continueCreateNew(r, c) }} onMouseDown={() => { startCreateNew(r, c) }} onMouseUp={() => { endCreateNew(r, c) }} style={{ width: props.dimension + "px", height: props.dimension + "px" }} key={c}>{getContentFromMatrix(r, c)}</div>
+                    return <div onDragOver={(e) => { e.preventDefault(); props.onDragOver(r, c) }}
+                        className="row-cell" id={`carribean_r${r}c${c}`}
+                        onMouseEnter={() => { continueCreateNew(r, c) }}
+                        onMouseDown={() => { startCreateNew(r, c) }}
+                        onMouseUp={() => { endCreateNew(r, c) }}
+                        style={{ width: props.dimension + "px", height: props.dimension + "px" }}
+                        key={c}>
+                        
+                       {props.content[`r${r}c${c}`]}
+                        
+                        
+                        </div>
 
                 }
                 ))}
@@ -121,7 +133,7 @@ export default function CaribbeanReservation(props) {
 
         }
         )}
-      
+
         {tags}
 
 
