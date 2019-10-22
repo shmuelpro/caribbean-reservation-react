@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import logo from './logo.svg';
 import CaribbeanReservation from './CaribbeanReservation'
 import Tag from './CaribbeanReservation/Tag'
-import { usePrevious,makeid } from './CaribbeanReservation/helpers'
+import { usePrevious, makeid } from './CaribbeanReservation/helpers'
 import { createTagText, getRandomColor } from './CaribbeanReservation/TagHelpers'
 
 import './App.css';
@@ -46,17 +46,17 @@ function App() {
 
   useEffect(() => {
 
-    if(startedChange){
-   
-        const timer = setTimeout(() => {
-          
-          setStartedChange(false);
-          setChangedContent(a.current);
-        }, 5);
-        
-        
-        return () => clearTimeout(timer);
-    
+    if (startedChange) {
+
+      const timer = setTimeout(() => {
+
+        setStartedChange(false);
+        setChangedContent(a.current);
+      }, 5);
+
+
+      return () => clearTimeout(timer);
+
     }
 
   }, [startedChange])
@@ -64,16 +64,16 @@ function App() {
 
   useEffect(() => {
 
-      var newContent = { ...content };
+    var newContent = { ...content };
 
-      if(prevChangeContent){
-        var prevChange = formatRowColumn(prevChangeContent.r, prevChangeContent.c)
-        delete newContent[prevChange];
-      }
+    if (prevChangeContent) {
+      var prevChange = formatRowColumn(prevChangeContent.r, prevChangeContent.c)
+      delete newContent[prevChange];
+    }
 
-      var newChange = formatRowColumn(changedContent.r, changedContent.c)
-      newContent[newChange] = (<span style={{ background: "green", width: "20px", height: "20px", display: "block" }}></span>);
-      setContent(newContent)   
+    var newChange = formatRowColumn(changedContent.r, changedContent.c)
+    newContent[newChange] = (<span style={{ background: "green", width: "20px", height: "20px", display: "block" }}></span>);
+    setContent(newContent)
 
   }, [changedContent])
 
@@ -145,17 +145,10 @@ function App() {
 
   function onDragOverCell(r, c) {
 
-
-
-    
-
     if (a.current.r !== r || c !== a.current.c) {
       setStartedChange(true)
       a.current = { r, c };
-      // setChangedContent({ r, c });
 
-
-      // console.log(changedContent.current)
     }
   }
 
@@ -163,7 +156,23 @@ function App() {
 
 
 
-  function onDragEndCell(id, r, c) {
+  function onDragEndCell(id) {
+
+    console.log(id, changedContent.r, changedContent.r)
+
+    var itemIndex = tags.findIndex((item)=>{
+      return item.id === id;
+    })
+
+    var newTags  = [...tags];
+
+     var editedItem = tags[itemIndex];
+     editedItem.row = changedContent.r;
+     editedItem.column = changedContent.c;
+
+     newTags[itemIndex] = editedItem;
+
+     setTags(newTags)
 
 
   }
@@ -202,14 +211,8 @@ function App() {
         height={height}
         onDragOver={(r, c) => { onDragOverCell(r, c) }}
         content={content}
-
       >
-
-
         {tags.map((tag) => {
-
-
-
           return <Tag key={tag.id} onDragEnd={onDragEndCell.bind(this)} onMouseOver={mouseOverTag.bind(this)} onContextMenu={(e) => { e.preventDefault(); console.log(`right clicked ${tag.id}`) }}  {...tag} />
         })}
       </CaribbeanReservation>

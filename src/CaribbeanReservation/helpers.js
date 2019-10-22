@@ -18,11 +18,11 @@ export function usePrevious(value) {
   return ref.current;
 }
 
-export function makeid() {
+export function makeid(length = 15) {
   let text = "";
   const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for (let i = 0; i < 15; i++)
+  for (let i = 0; i < length; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
 
   return text;
